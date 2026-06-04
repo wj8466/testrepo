@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>야야야야야야야야야야야</title>
+  <style>
+    body {
+      font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
+      margin: 0;
+      padding: 36px;
+      background: #f4f5f7;
+      color: #222;
+      line-height: 1.6;
+    }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 34px 48px 42px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    }
+    .top-area {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 22px;
+    }
+    .approval-box {
+      border-collapse: collapse;
+      font-size: 11px;
+      text-align: center;
+      width: 220px;
+      table-layout: fixed;
+    }
+    .approval-box th, .approval-box td {
+      border: 1px solid #333;
+      padding: 2px;
+    }
+    .approval-label {
+      width: 26px;
+      font-weight: 700;
+      background: #f4f4f4;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 2px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .approval-box th {
+      height: 22px;
+      background: #f4f4f4;
+      font-weight: 700;
+    }
+    .approval-box .sign-cell {
+      height: 34px;
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 3px solid #f28c28;
+      padding-bottom: 20px;
+      margin-bottom: 26px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 30px;
+      letter-spacing: -1px;
+    }
+    .header p {
+      margin: 8px 0 0;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .summary-box {
+      background: #fff8ef;
+      border: 1px solid #f2c08c;
+      padding: 16px 18px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 22px 0 28px;
+    }
+    .card {
+      background: #fafafa;
+      border: 1px solid #e3e3e3;
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .card .label {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .card .value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #d66b00;
+    }
+
+    h2 {
+      margin-top: 34px;
+      padding-left: 12px;
+      border-left: 6px solid #f28c28;
+      font-size: 21px;
+    }
+    h3 {
+      margin-top: 26px;
+      font-size: 17px;
+      color: #d66b00;
+    }
+    .sub-total {
+      font-size: 14px;
+      color: #666;
+      font-weight: 400;
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 22px;
+    }
+    .chart-card {
+      background: #fafafa;
+      border: 1px solid #e2e2e2;
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .chart-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .insight-box {
+      background: #fcfcfc;
+      border: 1px solid #e2e2e2;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-top: 14px;
+    }
+    .insight-box ul {
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 22px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 9px 11px;
+      vertical-align: top;
+    }
+    th {
+      background: #fff3e3;
+      text-align: center;
+      font-weight: 700;
+    }
+    td.amount, td.rate {
+      text-align: right;
+      white-space: nowrap;
+    }
+    .total-row {
+      background: #fff0d9;
+      font-weight: 700;
+    }
+    .note-box {
+      background: #f8f9fb;
+      border: 1px solid #dde3ea;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-top: 20px;
+    }
+    .footer {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid #ddd;
+      font-size: 13px;
+      color: #666;
+      text-align: right;
+    }
+
+    @media (max-width: 980px) {
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+      .chart-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    .chart-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+    .chart-panel {
+      background: #fcfcfc;
+      border: 1px solid #e6e6e6;
+      border-radius: 14px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .panel-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #222;
+    }
+    .panel-subtitle {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 16px;
+    }
+    .stacked-wrap {
+      background: #fff;
+      border: 1px solid #ececec;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .stacked-bar {
+      display: flex;
+      width: 100%;
+      height: 42px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #f1f1f1;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04);
+    }
+    .seg {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      position: relative;
+    }
+    .seg small {
+      font-size: 11px;
+      opacity: 0.95;
+    }
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px 14px;
+      margin-top: 14px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #fff;
+      border: 1px solid #efefef;
+      border-radius: 10px;
+      padding: 10px 11px;
+    }
+    .legend-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      margin-top: 3px;
+      flex: 0 0 14px;
+    }
+    .legend-text {
+      line-height: 1.35;
+    }
+    .legend-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 2px;
+    }
+    .legend-meta {
+      font-size: 12px;
+      color: #666;
+    }
+    .rank-wrap {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .rank-row {
+      display: grid;
+      grid-template-columns: 240px 1fr 124px;
+      gap: 12px;
+      align-items: center;
+    }
+    .rank-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #333;
+    }
+    .rank-bar {
+      position: relative;
+      height: 22px;
+      background: #edf0f4;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .rank-fill {
+      height: 100%;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 8px;
+      box-sizing: border-box;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      min-width: 38px;
+    }
+    .rank-value {
+      text-align: right;
+      font-size: 13px;
+      color: #444;
+      line-height: 1.35;
+    }
+    .rank-value strong {
+      display: block;
+      color: #222;
+      font-size: 14px;
+    }
+    .insight-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .insight-card {
+      background: linear-gradient(180deg, #fffaf5 0%, #fff 100%);
+      border: 1px solid #f1dfcc;
+      border-radius: 12px;
+      padding: 14px 14px 12px;
+    }
+    .insight-card .k {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 6px;
+    }
+    .insight-card .v {
+      font-size: 20px;
+      font-weight: 800;
+      color: #d66b00;
+      line-height: 1.3;
+    }
+    .insight-card .d {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+      line-height: 1.45;
+    }
+    @media (max-width: 980px) {
+      .legend-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .insight-cards {
+        grid-template-columns: 1fr;
+      }
+      .rank-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .rank-value {
+        text-align: left;
+      }
+    }
+    @media print {
+      .chart-panel, .legend-item, .insight-card {
+        break-inside: avoid;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .page {
+        box-shadow: none;
+        max-width: none;
+        padding: 26px 34px;
+      }
+      .cards {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .chart-card, .card {
+        break-inside: avoid;
+      }
+      table {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="top-area">
+      <table class="approval-box">
+        <tr>
+          <td class="approval-label" rowspan="2">결재</td>
+          <th>주무관</th>
+          <th>팀장</th>
+          <th>과장</th>
+        </tr>
+        <tr>
+          <td class="sign-cell"></td>
+          <td class="sign-cell"></td>
+          <td class="sign-cell"></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="header">
+      <h1>야야야야야야야야야</h1>
+      <p>행사기간: 2026년 9월 18일 ~ 9월 20일 / 장소: 제주도 문예회관 / 총사업비: 200,000,000원</p>
+    </div>
+
+    <div class="summary-box">
+      <strong>보고 요지</strong><br>
+      「제주 감귤 박람회」 예산안을 별도로 정리한 보고서입니다.
+      총사업비 2억 원을 행사장 조성, 프로그램 운영, 홍보, 인력, 안전관리 등 핵심 운영 요소 중심으로 배분하였으며,
+      아래 차트와 표를 통해 주요 집행 항목과 비중을 한눈에 확인할 수 있도록 구성하였습니다.
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="label">총사업비</div>
+        <div class="value">200,000,000원</div>
+      </div>
+      <div class="card">
+        <div class="label">최대 비중 항목</div>
+        <div class="value">행사장 조성<br><span style="font-size:15px; color:#444;">55,000,000원 (27.5%)</span></div>
+      </div>
+      <div class="card">
+        <div class="label">운영 핵심 3개 항목 합계</div>
+        <div class="value">121,000,000원<br><span style="font-size:15px; color:#444;">전체의 60.5%</span></div>
+      </div>
+      <div class="card">
+        <div class="label">예비비</div>
+        <div class="value">8,000,000원<br><span style="font-size:15px; color:#444;">전체의 4.0%</span></div>
+      </div>
+    </div>
+
+    <h2>1. 총괄 예산 요약</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>예산액</th>
+          <th>비율</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>행사장 조성 및 시설 설치</td><td class="amount">55,000,000원</td><td class="rate">27.5%</td></tr><tr><td>프로그램 운영비</td><td class="amount">38,000,000원</td><td class="rate">19.0%</td></tr><tr><td>홍보·마케팅비</td><td class="amount">28,000,000원</td><td class="rate">14.0%</td></tr><tr><td>인건비 및 운영인력</td><td class="amount">24,000,000원</td><td class="rate">12.0%</td></tr><tr><td>공연·이벤트비</td><td class="amount">20,000,000원</td><td class="rate">10.0%</td></tr><tr><td>안전·방역·보험비</td><td class="amount">10,000,000원</td><td class="rate">5.0%</td></tr><tr><td>장비 임차 및 시스템 운영</td><td class="amount">9,000,000원</td><td class="rate">4.5%</td></tr><tr><td>참가 농가 및 부스 지원</td><td class="amount">8,000,000원</td><td class="rate">4.0%</td></tr><tr><td>예비비</td><td class="amount">8,000,000원</td><td class="rate">4.0%</td></tr>
+        <tr class="total-row">
+          <td>합계</td>
+          <td class="amount">200,000,000원</td>
+          <td class="rate">100%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    
+    <h2>2. 예산 분석 차트</h2>
+
+    <div class="chart-summary-grid">
+
+      <div class="chart-panel">
+        <div class="panel-title">전체 예산 구성 비중</div>
+        <div class="panel-subtitle">총사업비 2억 원이 어떤 항목에 얼마나 배분되는지 한 줄로 확인할 수 있도록 구성했습니다.</div>
+
+        <div class="stacked-wrap">
+          <div class="stacked-bar">
+            <div class="seg" style="width:27.5%; background:#F28C28; color:#fff;">27.5%</div><div class="seg" style="width:19.0%; background:#FFB347; color:#fff;">19.0%</div><div class="seg" style="width:14.0%; background:#6CBF84; color:#fff;">14.0%</div><div class="seg" style="width:12.0%; background:#4A90E2; color:#fff;">12.0%</div><div class="seg" style="width:10.0%; background:#9B7EDE; color:#fff;">10.0%</div><div class="seg" style="width:5.0%; background:#E57373; color:#fff;">5.0%</div><div class="seg" style="width:4.5%; background:#5EC8C8; color:#fff;"></div><div class="seg" style="width:4.0%; background:#B0B85A; color:#fff;"></div><div class="seg" style="width:4.0%; background:#8D99AE; color:#fff;"></div>
+          </div>
+          <div class="legend-grid">
+            
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#F28C28;"></div>
+      <div class="legend-text">
+        <div class="legend-name">행사장 조성 및 시설 설치</div>
+        <div class="legend-meta">55,000,000원 · 27.5%</div>
+      </div>
+    </div>
+    
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#FFB347;"></div>
+      <div class="legend-text">
+        <div class="legend-name">프로그램 운영비</div>
+        <div class="legend-meta">38,000,000원 · 19.0%</div>
+      </div>
+    </div>
+    
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#6CBF84;"></div>
+      <div class="legend-text">
+        <div class="legend-name">홍보·마케팅비</div>
+        <div class="legend-meta">28,000,000원 · 14.0%</div>
+      </div>
+    </div>
+    
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#4A90E2;"></div>
+      <div class="legend-text">
+        <div class="legend-name">인건비 및 운영인력</div>
+        <div class="legend-meta">24,000,000원 · 12.0%</div>
+      </div>
+    </div>
+    
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#9B7EDE;"></div>
+      <div class="legend-text">
+        <div class="legend-name">공연·이벤트비</div>
+        <div class="legend-meta">20,000,000원 · 10.0%</div>
+      </div>
+    </div>
+    
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#E57373;"></div>
+      <div class="legend-text">
+        <div class="legend-name">안전·방역·보험비</div>
+        <div class="legend-meta">10,000,000원 · 5.0%</div>
+      </div>
+    </div>
+    
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#5EC8C8;"></div>
+      <div class="legend-text">
+        <div class="legend-name">장비 임차 및 시스템 운영</div>
+        <div class="legend-meta">9,000,000원 · 4.5%</div>
+      </div>
+    </div>
+    
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#B0B85A;"></div>
+      <div class="legend-text">
+        <div class="legend-name">참가 농가 및 부스 지원</div>
+        <div class="legend-meta">8,000,000원 · 4.0%</div>
+      </div>
+    </div>
+    
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#8D99AE;"></div>
+      <div class="legend-text">
+        <div class="legend-name">예비비</div>
+        <div class="legend-meta">8,000,000원 · 4.0%</div>
+      </div>
+    </div>
+    
+          </div>
+        </div>
+
+        <div class="insight-cards">
+          <div class="insight-card">
+            <div class="k">가장 큰 비중</div>
+            <div class="v">행사장 조성 및 시설 설치</div>
+            <div class="d">55,000,000원 · 전체의 27.5%</div>
+          </div>
+          <div class="insight-card">
+            <div class="k">상위 3개 항목 합계</div>
+            <div class="v">121,000,000원</div>
+            <div class="d">행사장 조성 + 프로그램 운영 + 홍보·마케팅 = 전체의 60.5%</div>
+          </div>
+          <div class="insight-card">
+            <div class="k">상위 4개 항목 집중도</div>
+            <div class="v">72.5%</div>
+            <div class="d">시설·프로그램·홍보·인력 예산이 전체의 72.5% (145,000,000원)를 차지합니다.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-panel">
+        <div class="panel-title">항목별 예산 순위</div>
+        <div class="panel-subtitle">금액이 큰 순서대로 정렬하여 우선순위를 직관적으로 파악할 수 있도록 정리했습니다.</div>
+
+        <div class="rank-wrap">
+          
+    <div class="rank-row">
+      <div class="rank-label">행사장 조성 및 시설 설치</div>
+      <div class="rank-bar">
+        <div class="rank-fill" style="width:100.00%; background:#F28C28;">
+          27.5%
+        </div>
+      </div>
+      <div class="rank-value">
+        <strong>55,000,000원</strong>
+        전체 예산의 27.5%
+      </div>
+    </div>
+    
+    <div class="rank-row">
+      <div class="rank-label">프로그램 운영비</div>
+      <div class="rank-bar">
+        <div class="rank-fill" style="width:69.09%; background:#FFB347;">
+          19.0%
+        </div>
+      </div>
+      <div class="rank-value">
+        <strong>38,000,000원</strong>
+        전체 예산의 19.0%
+      </div>
+    </div>
+    
+    <div class="rank-row">
+      <div class="rank-label">홍보·마케팅비</div>
+      <div class="rank-bar">
+        <div class="rank-fill" style="width:50.91%; background:#6CBF84;">
+          14.0%
+        </div>
+      </div>
+      <div class="rank-value">
+        <strong>28,000,000원</strong>
+        전체 예산의 14.0%
+      </div>
+    </div>
+    
+    <div class="rank-row">
+      <div class="rank-label">인건비 및 운영인력</div>
+      <div class="rank-bar">
+        <div class="rank-fill" style="width:43.64%; background:#4A90E2;">
+          12.0%
+        </div>
+      </div>
+      <div class="rank-value">
+        <strong>24,000,000원</strong>
+        전체 예산의 12.0%
+      </div>
+    </div>
+    
+    <div class="rank-row">
+      <div class="rank-label">공연·이벤트비</div>
+      <div class="rank-bar">
+        <div class="rank-fill" style="width:36.36%; background:#9B7EDE;">
+          10.0%
+        </div>
+      </div>
+      <div class="rank-value">
+        <strong>20,000,000원</strong>
+        전체 예산의 10.0%
+      </div>
+    </div>
+    
+    <div class="rank-row">
+      <div class="rank-label">안전·방역·보험비</div>
+      <div class="rank-bar">
+        <div class="rank-fill" style="width:18.18%; background:#E57373;">
+          5.0%
+        </div>
+      </div>
+      <div class="rank-value">
+        <strong>10,000,000원</strong>
+        전체 예산의 5.0%
+      </div>
+    </div>
+    
+    <div class="rank-row">
+      <div class="rank-label">장비 임차 및 시스템 운영</div>
+      <div class="rank-bar">
+        <div class="rank-fill" style="width:16.36%; background:#5EC8C8;">
+          4.5%
+        </div>
+      </div>
+      <div class="rank-value">
+        <strong>9,000,000원</strong>
+        전체 예산의 4.5%
+      </div>
+    </div>
+    
+    <div class="rank-row">
+      <div class="rank-label">참가 농가 및 부스 지원</div>
+      <div class="rank-bar">
+        <div class="rank-fill" style="width:14.55%; background:#B0B85A;">
+          4.0%
+        </div>
+      </div>
+      <div class="rank-value">
+        <strong>8,000,000원</strong>
+        전체 예산의 4.0%
+      </div>
+    </div>
+    
+    <div class="rank-row">
+      <div class="rank-label">예비비</div>
+      <div class="rank-bar">
+        <div class="rank-fill" style="width:14.55%; background:#8D99AE;">
+          4.0%
+        </div>
+      </div>
+      <div class="rank-value">
+        <strong>8,000,000원</strong>
+        전체 예산의 4.0%
+      </div>
+    </div>
+    
+        </div>
+      </div>
+
+    </div>
+
+    <h2>3. 세부 예산 내역</h2>
+    
+    <section class="detail-block">
+      <h3>행사장 조성 및 시설 설치 <span class="sub-total">(55,000,000원)</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">세부 항목</th>
+            <th style="width:18%;">예산액</th>
+            <th>산출 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>기본 부스 설치</td>
+          <td class="amount">22,000,000원</td>
+          <td>농가·기업·체험 부스 설치</td>
+        </tr>
+        <tr>
+          <td>전시관 조성</td>
+          <td class="amount">12,000,000원</td>
+          <td>감귤 홍보관, 품종 전시, 안내 패널 제작</td>
+        </tr>
+        <tr>
+          <td>무대 및 행사장 연출</td>
+          <td class="amount">8,000,000원</td>
+          <td>개막식 무대, 포토존, 행사장 장식</td>
+        </tr>
+        <tr>
+          <td>안내 사인물 제작</td>
+          <td class="amount">5,000,000원</td>
+          <td>현수막, 배너, 방향 안내판, 프로그램 안내판</td>
+        </tr>
+        <tr>
+          <td>전기·배선·기본 설비</td>
+          <td class="amount">5,000,000원</td>
+          <td>부스 전력, 조명, 기본 배선</td>
+        </tr>
+        <tr>
+          <td>행사장 환경 정비</td>
+          <td class="amount">3,000,000원</td>
+          <td>휴게공간, 동선 정리, 현장 미관 개선</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="detail-block">
+      <h3>프로그램 운영비 <span class="sub-total">(38,000,000원)</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">세부 항목</th>
+            <th style="width:18%;">예산액</th>
+            <th>산출 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>감귤 체험 프로그램 운영</td>
+          <td class="amount">14,000,000원</td>
+          <td>감귤청, 감귤잼, 디저트 만들기 등</td>
+        </tr>
+        <tr>
+          <td>어린이·가족 프로그램</td>
+          <td class="amount">6,000,000원</td>
+          <td>그림 그리기, 퀴즈, 스탬프 투어</td>
+        </tr>
+        <tr>
+          <td>세미나 및 교육 운영</td>
+          <td class="amount">7,000,000원</td>
+          <td>강사비, 자료집, 회의 운영비</td>
+        </tr>
+        <tr>
+          <td>체험 재료 구입</td>
+          <td class="amount">6,000,000원</td>
+          <td>감귤, 부재료, 포장재, 소모품</td>
+        </tr>
+        <tr>
+          <td>현장 이벤트 운영</td>
+          <td class="amount">5,000,000원</td>
+          <td>관람객 참여 이벤트, 경품 일부</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="detail-block">
+      <h3>홍보·마케팅비 <span class="sub-total">(28,000,000원)</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">세부 항목</th>
+            <th style="width:18%;">예산액</th>
+            <th>산출 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>온라인 홍보</td>
+          <td class="amount">8,000,000원</td>
+          <td>SNS 광고, 카드뉴스, 온라인 배너</td>
+        </tr>
+        <tr>
+          <td>오프라인 홍보물 제작</td>
+          <td class="amount">7,000,000원</td>
+          <td>포스터, 리플릿, 현수막, 초청장</td>
+        </tr>
+        <tr>
+          <td>언론 홍보</td>
+          <td class="amount">5,000,000원</td>
+          <td>보도자료 배포, 지역 언론 연계</td>
+        </tr>
+        <tr>
+          <td>영상 및 사진 콘텐츠 제작</td>
+          <td class="amount">5,000,000원</td>
+          <td>행사 홍보영상, 스케치 영상, 사진 촬영</td>
+        </tr>
+        <tr>
+          <td>홈페이지·예약 페이지 운영</td>
+          <td class="amount">3,000,000원</td>
+          <td>행사 안내 페이지, 사전 신청 관리</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="detail-block">
+      <h3>인건비 및 운영인력 <span class="sub-total">(24,000,000원)</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">세부 항목</th>
+            <th style="width:18%;">예산액</th>
+            <th>산출 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>행사 운영요원</td>
+          <td class="amount">10,000,000원</td>
+          <td>안내, 접수, 동선 관리 인력</td>
+        </tr>
+        <tr>
+          <td>체험 프로그램 보조인력</td>
+          <td class="amount">5,000,000원</td>
+          <td>체험 부스별 운영 보조</td>
+        </tr>
+        <tr>
+          <td>안전관리 인력</td>
+          <td class="amount">4,000,000원</td>
+          <td>질서 유지, 응급상황 대응 지원</td>
+        </tr>
+        <tr>
+          <td>통역·안내 전문인력</td>
+          <td class="amount">2,000,000원</td>
+          <td>관광객 및 외국인 방문객 대응</td>
+        </tr>
+        <tr>
+          <td>사전 준비 및 철거 인력</td>
+          <td class="amount">3,000,000원</td>
+          <td>행사 전후 설치·철거 지원</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="detail-block">
+      <h3>공연·이벤트비 <span class="sub-total">(20,000,000원)</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">세부 항목</th>
+            <th style="width:18%;">예산액</th>
+            <th>산출 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>개막식 공연</td>
+          <td class="amount">7,000,000원</td>
+          <td>축하공연, 사회자, 음향 연계</td>
+        </tr>
+        <tr>
+          <td>지역 예술단체 공연</td>
+          <td class="amount">5,000,000원</td>
+          <td>도내 공연팀 섭외</td>
+        </tr>
+        <tr>
+          <td>방문객 참여 이벤트</td>
+          <td class="amount">3,000,000원</td>
+          <td>레크리에이션, 무대 이벤트</td>
+        </tr>
+        <tr>
+          <td>경품 및 기념품</td>
+          <td class="amount">3,000,000원</td>
+          <td>감귤 관련 상품, 기념품</td>
+        </tr>
+        <tr>
+          <td>폐막식 및 시상</td>
+          <td class="amount">2,000,000원</td>
+          <td>우수 부스 시상, 마무리 행사</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="detail-block">
+      <h3>안전·방역·보험비 <span class="sub-total">(10,000,000원)</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">세부 항목</th>
+            <th style="width:18%;">예산액</th>
+            <th>산출 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>행사 보험 가입</td>
+          <td class="amount">3,000,000원</td>
+          <td>방문객 및 행사 운영 관련 보험</td>
+        </tr>
+        <tr>
+          <td>응급의료 지원</td>
+          <td class="amount">2,000,000원</td>
+          <td>응급 키트, 의료 인력 또는 구급 연계</td>
+        </tr>
+        <tr>
+          <td>안전관리 물품</td>
+          <td class="amount">2,000,000원</td>
+          <td>안전 펜스, 소화기, 안내 장비</td>
+        </tr>
+        <tr>
+          <td>방역 및 위생관리</td>
+          <td class="amount">2,000,000원</td>
+          <td>손소독제, 청소, 위생용품</td>
+        </tr>
+        <tr>
+          <td>혼잡 관리 대책</td>
+          <td class="amount">1,000,000원</td>
+          <td>대기선, 동선 통제용 물품</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="detail-block">
+      <h3>장비 임차 및 시스템 운영 <span class="sub-total">(9,000,000원)</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">세부 항목</th>
+            <th style="width:18%;">예산액</th>
+            <th>산출 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>음향·조명 장비</td>
+          <td class="amount">4,000,000원</td>
+          <td>무대 및 공연 운영</td>
+        </tr>
+        <tr>
+          <td>영상 장비</td>
+          <td class="amount">2,000,000원</td>
+          <td>스크린, 프로젝터, 송출 장비</td>
+        </tr>
+        <tr>
+          <td>접수·운영 시스템</td>
+          <td class="amount">1,500,000원</td>
+          <td>사전 접수, 현장 등록 관리</td>
+        </tr>
+        <tr>
+          <td>무전기 및 운영 장비</td>
+          <td class="amount">1,000,000원</td>
+          <td>현장 운영진 소통 장비</td>
+        </tr>
+        <tr>
+          <td>기타 장비 임차</td>
+          <td class="amount">500,000원</td>
+          <td>예비 장비 및 소모성 장비</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="detail-block">
+      <h3>참가 농가 및 부스 지원 <span class="sub-total">(8,000,000원)</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">세부 항목</th>
+            <th style="width:18%;">예산액</th>
+            <th>산출 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>농가 참가 지원</td>
+          <td class="amount">3,000,000원</td>
+          <td>참여 농가 부담 완화</td>
+        </tr>
+        <tr>
+          <td>판매 부스 운영 지원</td>
+          <td class="amount">2,000,000원</td>
+          <td>기본 비품, 테이블, 의자 등</td>
+        </tr>
+        <tr>
+          <td>감귤 샘플 제공 지원</td>
+          <td class="amount">1,500,000원</td>
+          <td>시식용 감귤, 홍보용 샘플</td>
+        </tr>
+        <tr>
+          <td>우수 농가 시상</td>
+          <td class="amount">1,500,000원</td>
+          <td>우수 부스 및 품질 평가 시상</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+    <section class="detail-block">
+      <h3>예비비 <span class="sub-total">(8,000,000원)</span></h3>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:32%;">세부 항목</th>
+            <th style="width:18%;">예산액</th>
+            <th>산출 내용</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        <tr>
+          <td>긴급 보수 및 추가 설치</td>
+          <td class="amount">3,000,000원</td>
+          <td>행사장 시설 보완</td>
+        </tr>
+        <tr>
+          <td>프로그램 추가 운영비</td>
+          <td class="amount">2,000,000원</td>
+          <td>방문객 증가 시 체험 재료 추가</td>
+        </tr>
+        <tr>
+          <td>안전 관련 추가 비용</td>
+          <td class="amount">1,500,000원</td>
+          <td>현장 혼잡, 안전 대응</td>
+        </tr>
+        <tr>
+          <td>기타 예측 불가 비용</td>
+          <td class="amount">1,500,000원</td>
+          <td>돌발 상황 대응</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+    
+
+    <div class="note-box">
+      <strong>검토 의견</strong><br>
+      본 예산안은 행사 준비·운영·홍보·안전관리 전 과정을 포괄하도록 구성되어 있으며,
+      특히 방문객 체감도가 높은 시설 조성, 프로그램 운영, 홍보 부문에 예산을 집중 배분하였습니다.
+      향후 세부 집행 단계에서는 참가 규모, 협찬 유치, 부스 운영 방식 등에 따라 일부 조정이 가능하도록 예비비를 확보해 두었습니다.
+    </div>
+
+    <div class="footer">
+      제주특별자치도 감귤 박람회 예산안 보고자료
+    </div>
+  </div>
+</body>
+</html>
